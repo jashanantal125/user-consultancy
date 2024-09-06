@@ -13,5 +13,11 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "app/dashboard/index.js", "app/registration/index.js", "app/afterlogin/afterlogin.js", "app/home", "app/forgotpassword.tsx/index.app/dashboard/global.jsbal.js", "app/editprofile/editprofile.js", "components/customdrawer.js", "components/productviewdetails.js", "components/dailyhorodetails.js", "components/dailyhorodetails.js"  ]
 }
+
+
+
+
+
+
