@@ -18,10 +18,9 @@ import Index from '../index'
 import OtpVerify from '../otpverify';
 import AfterLogin from '../afterlogin';
 import blogDetails from '../blogscreen';
-import AiChat from '../aichatbot';
 import FloatingButton from '@/components/floatingbutton';
 import { NavigationAction } from '@react-navigation/native';
-import Main from '../aichatbot';
+
 
 
 
@@ -151,7 +150,6 @@ export default function Dashboard() {
         <Stack.Screen name="otpverify" component={OtpVerify} />
         <Stack.Screen name="afterlogin" component={AfterLogin} />
         <Stack.Screen name="blogscreen" component={blogDetails} />
-        <Stack.Screen name="aichatbot" component={Main} />
         <Stack.Screen name="dashboard" component={Dashboard} options={{ headerShown: false }} />
 
       </Stack.Navigator>

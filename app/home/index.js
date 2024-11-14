@@ -40,10 +40,10 @@ export default function Home() {
         Alert.alert('You are now connected to an astrologer!')
       };
 
-    const handleClick = () => {
-        navigation.navigate('aichatbot')
-        Alert.alert('You are now chatting with AI!')
-      };
+    // const handleClick = () => {
+    //     navigation.navigate('aichatbot')
+    //     Alert.alert('You are now chatting with AI!')
+    //   };
 
       useEffect(() => {
 
@@ -112,7 +112,7 @@ export default function Home() {
             ))}
             </View>
             {bannerData.map((row) => (
-            <Pressable style={homeStyles.bannerContainer} onPress={handleClick}>
+            <Pressable style={homeStyles.bannerContainer} >
                 <Image style={homeStyles.bannerImage} source={homeBanner} />
             </Pressable>
              ))}
