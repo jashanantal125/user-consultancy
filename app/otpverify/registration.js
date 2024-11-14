@@ -39,7 +39,7 @@ export const otpVerifyStyles = StyleSheet.create({
     button:{
         width: '85%',
         height: 35,
-        backgroundColor: '#FF1D58',
+        backgroundColor: '#1E90FF',
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',

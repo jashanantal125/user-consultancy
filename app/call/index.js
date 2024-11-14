@@ -18,9 +18,9 @@ export default function Call() {
     const [consul, setConsul] = useState([{}])
     const sid = useStore((state) => state.sid);
     const images = [
-        'file:///Users/jashanantal/Downloads/EB6B44F5-544C-4507-966C-252D3589F3C2.jpg',
-        'file:///Users/jashanantal/Downloads/D5D51562-C788-4FCC-80D2-3077EBF8C6E6.jpg',
-        'file:///Users/jashanantal/Downloads/8EC501E7-6E78-444A-935E-F709B190EF4B.jpg'
+        'file:///Users/jashanantal/Downloads/17D9A222-AADE-437C-BDA3-5A3EA1C968B2.JPEG',
+        'file:///Users/jashanantal/Downloads/E14ECB7D-B342-4A44-8BCC-BA7AFD48A6C9.JPEG',
+        'file:///Users/jashanantal/Downloads/6848FE8E-3197-41EA-8575-B7A7932A56D2.JPEG'
         ];
 
 
@@ -31,7 +31,7 @@ export default function Call() {
           }, []);
         
           const getConsultantData = async () => {
-            const res = await fetch(`http://65.0.52.105:8006/api/resource/User?filters=[["category", "=", "Astrologer"]]&fields=["*"]&sid=${sid}`, {
+            const res = await fetch(`http://65.0.52.105:8006/api/resource/User?filters=[["consultant_category", "=", "Astrologer"]]&fields=["*"]&sid=${sid}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',

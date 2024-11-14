@@ -22,7 +22,7 @@ export const afterLoginStyles = StyleSheet.create({
 
     title2: {
         fontSize: 28,
-        color: '#FF1D58',
+        color: '#1E90FF',
         fontFamily: 'Arial',
         fontWeight: 'bold',
     },
@@ -36,7 +36,7 @@ export const afterLoginStyles = StyleSheet.create({
     button:{
         width: 250,
         height: 35,
-        backgroundColor: '#FF1D58',
+        backgroundColor: '#1E90FF',
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
@@ -44,12 +44,12 @@ export const afterLoginStyles = StyleSheet.create({
         borderRadius: 20,
         borderColor: 'white',
         position: 'relative',
-        top: '140%',
+        top: '60%',
     },
 
     exploreText: {
         position: 'relative',
-        top: '145%',
+        top: '62%',
         opacity: 0.5,
     },
 

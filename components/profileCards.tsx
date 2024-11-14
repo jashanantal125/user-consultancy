@@ -26,11 +26,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ imageUri, profileName, depart
               <Text style={styles.profileName}>{profileName}</Text>
               <Text style={styles.profileDepartment}>{department}</Text>
               <View style={styles.ratingContainer}>
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
               </View>
             </View>
           </View>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 9999,
     marginRight: 15,
-    borderColor: '#FF1D58',
+    borderColor: '#1E90FF',
     borderWidth: 2
   },
   profileText: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FF1D58',
+    backgroundColor: '#1E90FF',
     borderRadius: 12,
   },
   profileActionText: {

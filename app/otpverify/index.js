@@ -29,7 +29,7 @@ export default function OtpVerify() {
       "usr": phoneNumber.replace(/\D/g, '').slice(-10),
       "pwd": "Abcd@1234",
     };
-    const res = await fetch("http://65.0.52.105:8006/api/method/consultant.api.login", {
+    const res = await fetch("http://65.0.52.105:8006/api/method/consultant.api.auth.login", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -40,9 +40,9 @@ export default function OtpVerify() {
 
     const data = await res.json();
 
-    if(data.message.success_key==1){
-        console.log(data.message.message)
-        await AsyncStorage.setItem('token', JSON.stringify(data.message.api_key+":"+data.message.api_secret));
+    if(data.Success == true){
+        console.log(data.message)
+        await AsyncStorage.setItem('token', JSON.stringify(data.data.api_key+":"+data.data.api_secret));
         AsyncStorage.setItem('sid', JSON.stringify(data.message.sid));
         console.log("Login successfull")
         Navigation.navigate('afterlogin');
@@ -71,7 +71,7 @@ export default function OtpVerify() {
         <OtpInput
           textInputProps={otp}
           numberOfDigits={4}
-          focusColor='#FF1D58'
+          focusColor='#1E90FF'
           onTextChange={setOtp}
         />
       </View>

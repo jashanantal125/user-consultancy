@@ -18,7 +18,10 @@ import Index from '../index'
 import OtpVerify from '../otpverify';
 import AfterLogin from '../afterlogin';
 import blogDetails from '../blogscreen';
+import AiChat from '../aichatbot';
 import FloatingButton from '@/components/floatingbutton';
+import { NavigationAction } from '@react-navigation/native';
+import Main from '../aichatbot';
 
 
 
@@ -45,7 +48,7 @@ function HomePage() {
 
   return (
     <Drawer.Navigator
-    
+
       screenOptions={screenOptions}
       drawerContent={(props: DrawerContentComponentProps) => <CustomDrawerContent {...props} />}
     >
@@ -128,18 +131,18 @@ const screenOptions = ({ navigation }: { navigation: any }) => ({
 
 export default function Dashboard() {
 
-  
+
 
   return (
-    
+
     <NavigationContainer independent={true} >
       <Stack.Navigator>
-      
+
         <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
           component={HomePage}
-        /> 
+        />
         <Stack.Screen name="editprofile" component={EditProfile} />
         <Stack.Screen name="dailyhoroscope" component={Dailyhoroscope} />
         <Stack.Screen name="productdetails" component={ProDetails} />
@@ -148,10 +151,11 @@ export default function Dashboard() {
         <Stack.Screen name="otpverify" component={OtpVerify} />
         <Stack.Screen name="afterlogin" component={AfterLogin} />
         <Stack.Screen name="blogscreen" component={blogDetails} />
+        <Stack.Screen name="aichatbot" component={Main} />
         <Stack.Screen name="dashboard" component={Dashboard} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
-    
+
   );
 }

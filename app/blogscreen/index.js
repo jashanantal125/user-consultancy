@@ -32,7 +32,7 @@ export default function BlogDetails({ route }) {
   };
 
   if (!blogDetail) {
-    return <ActivityIndicator size="large" color="#FF1D58" />;
+    return <ActivityIndicator size="large" color="#1E90FF" />;
   }
 
   return (

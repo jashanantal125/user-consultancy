@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 export const editProfileStyles = StyleSheet.create({
     profileContainer: {
-        backgroundColor: '#FF1D58',
+        backgroundColor: '#1E90FF',
         padding: 20,
         alignItems: 'center',
       },
@@ -32,7 +32,7 @@ export const editProfileStyles = StyleSheet.create({
         marginRight: 8,
         fontSize: 15,
         fontWeight: '600',
-        color: '#FF1D58',
+        color: '#1E90FF',
       },
 
       formContainer:{
@@ -40,6 +40,6 @@ export const editProfileStyles = StyleSheet.create({
       },
 
       button:{
-      backgroundColor: '#FF1D58'
+      backgroundColor: '#1E90FF'
       }
 });

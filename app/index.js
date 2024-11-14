@@ -1,13 +1,18 @@
 import { Text, StyleSheet, View, Pressable, Alert } from 'react-native';
 import { mainPageStyles } from './main';
 import { Link, router } from "expo-router";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Image } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import { useNavigation } from '@react-navigation/native';
-const logo = require("../assets/images/favicon.png")
+const logo = require("../assets/images/krewlogo.png")
 const whiteArrow = require("../assets/images/whiteArrow.png")
+const lowerText = require("../assets/images/firstText.png")
+const crew = require("../assets/images/workers.png")
 import useStore from './store';
+import socket from '../Socket/socket'
+import { useSocket } from '../Socket/socket'
+
 
 
 
@@ -15,6 +20,7 @@ export default function Index() {
     const [phoneNumber, setPhoneNumber] = useState("");
     const navigation = useNavigation();
     const setSid = useStore((state) => state.setSid);
+    const socket = useSocket()
     // const verifyOtp = () => { 
     //     if (phoneNumber.length >13 ) {
     //         Alert.alert('Please Enter the correct number!')
@@ -22,17 +28,27 @@ export default function Index() {
     //     navigation.navigate('otpverify', {phoneNumber: phoneNumber}); 
     //   };  
 
+    // useEffect(() => {
+    //     if (socket?.connected) {
+	// 		socket?.on("latest_chat_updates", (data) => {
+	// 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// 			const { room, ...chat } = data;
+    //             console.log()
+				
+	// 		})};
+    // })
+
     const handlePhoneNumber = (value) => {
         setPhoneNumber(value)
     }
 
     const handleSubmit = async (event) => {
         var d = {
-
-            "usr": phoneNumber.replace(/\D/g, '').slice(-10),
-            "pwd": "Abcd@1234",
+            // "mobile_no": "0101010101"
+            "mobile_no": phoneNumber.replace(/\D/g, '').slice(-10),
+            // "pwd": "Abcd@1234",
         };
-        const res = await fetch("http://65.0.52.105:8006/api/method/consultant.api.loginOtp", {
+        const res = await fetch("http://65.0.52.105:8006/api/method/consultant.api.auth.loginOtp", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -41,11 +57,12 @@ export default function Index() {
             body: JSON.stringify(d)
         });
 
-        const data = await res.json();
+        const data = await res.json()
 
-        if (data.message.success_key == 1) {
+        if (data.Success == true) {
             console.log(data.message)
-            setSid(data.message.sid)
+            // console.log(data.data.sid)
+            setSid(data.data.sid)
             // localStorage.setItem('token', JSON.stringify(data.message.api_key+":"+data.message.api_secret));
             console.log('otp has been sent!')
             navigation.navigate('otpverify', { phoneNumber: phoneNumber });
@@ -60,22 +77,24 @@ export default function Index() {
         <View style={mainPageStyles.mainContainer}>
             <View style={mainPageStyles.container}>
                 <Image style={mainPageStyles.logo} source={logo} />
-                <Text style={mainPageStyles.title}>Astrotalk</Text>
+                <Text style={mainPageStyles.title}></Text>
+                {/* <Text style={mainPageStyles.loginText}>
+                Login
+            </Text> */}
             </View>
-            <View style={mainPageStyles.firstChatContainer}>
-                <Text style={mainPageStyles.firstChat}>
-                    First chat with astrologer is FREE!
-                </Text>
-            </View>
+            
             <View style={mainPageStyles.secondContainer}>
                 <View style={mainPageStyles.phoneContainer}>
                     <PhoneInput
-                        placeholder="Enter"
+                         textProps={{
+                            placeholder: 'Enter a phone number...'
+                        }}
                         value={phoneNumber}
                         onChangePhoneNumber={handlePhoneNumber}
                         // defaultCountry = "in"
                         flagStyle={mainPageStyles.flag}
                         initialValue='91'
+
 
                     />
                 </View>
@@ -89,8 +108,14 @@ export default function Index() {
                 </Pressable>
 
                 <Image style={mainPageStyles.whiteArrow} source={whiteArrow} />
+                <Image style={mainPageStyles.lowerImage} source={lowerText} />
+                <Image style={mainPageStyles.crew} source={crew} />
             </View>
-            <View style={mainPageStyles.bottomContain} >
+
+           
+
+            {/* <View style={mainPageStyles.bottomContain} >
+
                 <View style={mainPageStyles.firstTextContainer}>
                     <Text style={mainPageStyles.numberHeading}>
                         100%
@@ -121,9 +146,9 @@ export default function Index() {
                         Customers
                     </Text>
 
-                </View>
+                </View> */}
 
-            </View>
+            {/* </View> */}
         </View>
     );
 }

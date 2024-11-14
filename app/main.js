@@ -14,14 +14,24 @@ export const mainPageStyles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        
     },
+    
 
     secondContainer: {
         flex: 65,
-        backgroundColor: '#FF1D58',
+        backgroundColor: '#E5E4E2',
         alignItems: 'center',
         justifyContent: 'center',
         alignItems: 'center',
+        
+    },
+
+    loginText: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        top: '20%',
+        fontFamily: 'serif'
     },
 
 
@@ -57,9 +67,9 @@ export const mainPageStyles = StyleSheet.create({
         width: '75%',
         height: '6%',
         position: 'relative',
-        bottom: '32%',
-        borderColor: 'white',
-        borderWidth: 1,
+        bottom: '8%',
+        // borderColor: '1E90FF',
+        // borderWidth: 0.5,
         borderRadius: 10,
         display: 'flex',
         alignItems: 'center',
@@ -77,7 +87,7 @@ export const mainPageStyles = StyleSheet.create({
         borderRadius: 10,
         shadowColor: 'red',
         position: 'relative',
-        bottom: '28%',
+        bottom: '5%'
         
     },
 
@@ -91,7 +101,7 @@ export const mainPageStyles = StyleSheet.create({
         width: '7%',
         position: 'relative',
         height: '4%',
-        bottom: '33%',
+        bottom: '10%',
         left: '32%',
     },
 
@@ -105,6 +115,10 @@ export const mainPageStyles = StyleSheet.create({
         left: '15%',
         alignContent: 'center',
         alignItems: 'center',
+    },
+
+    lowerImage: {
+        top: '0%'
     },
 
     numberHeading: {
@@ -151,5 +165,13 @@ export const mainPageStyles = StyleSheet.create({
 
     formButton: {
         opacity: 0,
-    }
+    },
+
+    crew: {
+        width: '50%',
+        height: "30%"
+
+
+    },
+
 })

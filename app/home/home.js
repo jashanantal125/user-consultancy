@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const homeStyles = StyleSheet.create({
 
     mainContainer: {
-        
+       
         alignItems: 'center',
         justifyContent: 'center',
     },

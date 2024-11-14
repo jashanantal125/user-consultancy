@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, FlatList, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSocket } from '@/Socket/socket';
+import axios from 'axios';
+import useStore from '../store';
+import { socket , io } from "socket.io-client";
 
 // Header component for chat screen
 const ChatHeader = ({ userName, profilePic }) => {
@@ -15,11 +19,69 @@ const ChatHeader = ({ userName, profilePic }) => {
 const ChatScreen = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+ 
+  const roomName = 'Pandit call';
+  const user = 'hs pranoy';
+  const email = 'hspranoy@gmail.com';
+  const sid = useStore((state) => state.sid);
+  const [socket, setSocket] = useState(null);
 
-  const sendMessage = () => {
+
+  
+  useEffect(() => {
+    if (sid) {
+      console.log("Initializing socket with SID:", sid);
+  
+      const newSocket = io("http://65.0.52.105:9005/astrology", {
+        withCredentials: true,
+        extraHeaders: {
+          sid: sid,
+        },
+      });
+  
+      setSocket(newSocket);
+  
+      // Log socket events
+      newSocket.on("connect", () => {
+        console.log("Socket connected with ID:", newSocket.id);  // Logs when connected
+      });
+  
+      newSocket.on("connect_error", (error) => {
+        console.error("Socket connection error:", error);  // Logs connection error
+      });
+  
+      newSocket.on("disconnect", () => {
+        console.log("Socket disconnected");
+      });
+  
+      return () => {
+        newSocket.disconnect();  // Disconnect on cleanup
+        console.log("Socket disconnected on cleanup");
+      };
+    } else {
+      console.log("SID is missing, socket not initialized");
+    }
+  }, [sid]);
+
+
+  const sendMessage = async () => {
     if (message.trim() !== '') {
-      setMessages([...messages, message]);
-      setMessage('');
+      setMessages((prevMessages) => [...prevMessages, { content: message, sender: user }]);
+      setMessage(''); 
+      try {
+        const response = await axios.post('http://65.0.52.105:9005/api/method/chat.api.message.send', {
+          content: message,
+          user,
+          room: roomName,
+          email,
+        });
+
+        if (response.status === 200) {
+          console.log('Message sent successfully');
+        }
+      } catch (error) {
+        console.error('Failed to send message:', error);
+      }
     }
   };
 
@@ -38,15 +100,16 @@ const ChatScreen = () => {
       <FlatList
         data={messages}
         renderItem={({ item }) => (
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageText}>{item}</Text>
+          <View style={item.sender === user ? styles.myMessageContainer : styles.theirMessageContainer}>
+            <Text style={styles.messageSender}>{item.sender}</Text>
+            <Text style={styles.messageText}>{item.content}</Text>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
         style={styles.messagesContainer}
         contentContainerStyle={styles.messagesContent}
-        inverted
       />
+      
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -93,13 +156,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
-  messageContainer: {
+  myMessageContainer: {
     alignSelf: 'flex-end',
     backgroundColor: '#FF1D58',
     borderRadius: 8,
     padding: 8,
     marginBottom: 8,
     maxWidth: '80%',
+  },
+  theirMessageContainer: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#EEE',
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 8,
+    maxWidth: '80%',
+  },
+  messageSender: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#333',
   },
   messageText: {
     fontSize: 16,
@@ -137,5 +213,3 @@ const styles = StyleSheet.create({
 });
 
 export default ChatScreen;
-
-

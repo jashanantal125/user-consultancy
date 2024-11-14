@@ -26,7 +26,7 @@ const MyComponent: React.FC<MyComponentProps> = ({
         <Button
           mode="contained"
           onPress={onPress}
-          color="#FF1D58"
+          color="#1E90FF"
           style={styles.button}
         >
           View Details
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    backgroundColor: '#FF1D58'
+    backgroundColor: '#1E90FF'
   },
 });
 

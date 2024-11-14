@@ -4,7 +4,7 @@ const spellImage = require('../assets/images/spell.png');
 
 const ProductViewDetails = ({ productContent }) => {
   if (!productContent) {
-    return <ActivityIndicator size="large" color="#FF1D58" />;
+    return <ActivityIndicator size="large" color="#1E90FF" />;
   }
 
   return (
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   button: {
     width: 100,
     height: 35,
-    backgroundColor: '#FF1D58',
+    backgroundColor: '#1E90FF',
     borderWidth: 0.5,
     borderRadius: 20,
     borderColor: 'white',

@@ -5,7 +5,7 @@ import { TextInput, Button, Pressable, Alert, Image, ImageBackground} from 'reac
 import { useState } from 'react';
 import { afterLoginStyles } from './afterlogin';
 import { useNavigation } from 'expo-router/build/useNavigation';
-const logo = require("../../assets/images/favicon.png")
+const logo = require("../../assets/images/krewlogo.png")
 
 
 export default function AfterLogin () {

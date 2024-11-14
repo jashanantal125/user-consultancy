@@ -26,11 +26,11 @@ const HomeProfileCard: React.FC<ProfileCardProps> = ({ imageUri, profileName, de
               <Text style={styles.profileName}>{profileName}</Text>
               <Text style={styles.profileDepartment}>{department}</Text>
               <View style={styles.ratingContainer}>
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
-                <FeatherIcon color="#FF1D58" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
+                <FeatherIcon color="#1E90FF" name="star" size={20} />
               </View>
             </View>
           </View>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginRight: 10,
-    borderColor: '#FF1D58',
+    borderColor: '#1E90FF',
     borderWidth: 2
   },
   profileInfo: {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: '#FF1D58',
+    backgroundColor: '#1E90FF',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',

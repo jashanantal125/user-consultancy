@@ -15,6 +15,7 @@ import Dashboard from './dashboard';
 import AfterLogin from './afterlogin';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import drawer from 'expo-router/drawer';
+import { SocketProvider } from "../Socket/socket";
 import Dailyhoroscope from './dailyhoroscope';
 
 
@@ -44,16 +45,17 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-
-      <NavigationContainer independent={true}>
-        <Stack.Navigator initialRouteName="index">
-          <Stack.Screen name="index" component={Index}  options={{headerShown: false}}/>
-          <Stack.Screen name="otpverify" component={OtpVerify} options={{headerShown: false}}/>
-          <Stack.Screen name="afterlogin" component={AfterLogin} options={{headerShown: false}}/>
-          <Stack.Screen name="dashboard" component={Dashboard} options={{ headerShown: false }} />
-          <Stack.Screen name="dailyhoroscope" component={Dailyhoroscope} options={{headerShown: false}}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SocketProvider>
+        <NavigationContainer independent={true}>
+          <Stack.Navigator initialRouteName="index">
+            <Stack.Screen name="index" component={Index} options={{ headerShown: false }} />
+            <Stack.Screen name="otpverify" component={OtpVerify} options={{ headerShown: false }} />
+            <Stack.Screen name="afterlogin" component={AfterLogin} options={{ headerShown: false }} />
+            <Stack.Screen name="dashboard" component={Dashboard} options={{ headerShown: false }} />
+            <Stack.Screen name="dailyhoroscope" component={Dailyhoroscope} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SocketProvider>
     </GestureHandlerRootView>  //check now
 
   );

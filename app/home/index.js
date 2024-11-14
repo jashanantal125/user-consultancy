@@ -20,6 +20,7 @@ import ChatScreen from '../chatscreen';
 import HomeProfileCard from '@/components/homeProfiles';
 import useStore from '../store';
 
+
  
 export default function Home() {
     const [search, setSearch] = useState('')
@@ -37,6 +38,11 @@ export default function Home() {
     const handlePress = () => {
         navigation.navigate('chatscreen')
         Alert.alert('You are now connected to an astrologer!')
+      };
+
+    const handleClick = () => {
+        navigation.navigate('aichatbot')
+        Alert.alert('You are now chatting with AI!')
       };
 
       useEffect(() => {
@@ -64,7 +70,7 @@ export default function Home() {
     }
 
       const getConsultantsData = async () => {
-        const res = await fetch(`http://65.0.52.105:8006/api/resource/User?filters=[["category", "=", "Astrologer"]]&fields=["*"]&sid=${sid}`, {
+        const res = await fetch(`http://65.0.52.105:8006/api/resource/User?filters=[["consultant_category", "=", "Astrologer"]]&fields=["*"]&sid=${sid}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +94,7 @@ export default function Home() {
                 <Searchbar
                     placeholder='search'
                     onChangeText={setSearch}
-                    value={search}
+                    value={search}  
                 />
             </View>
             <View style={homeStyles.iconContainer}>
@@ -97,7 +103,7 @@ export default function Home() {
             <IconButton
                     icon={horoscopeIcon}
                     iconColor='white'
-                    containerColor='#FF1D58'
+                    containerColor='#1E90FF'
                     mode='outlined'
                     size={60}
                 />
@@ -106,7 +112,7 @@ export default function Home() {
             ))}
             </View>
             {bannerData.map((row) => (
-            <Pressable style={homeStyles.bannerContainer}>
+            <Pressable style={homeStyles.bannerContainer} onPress={handleClick}>
                 <Image style={homeStyles.bannerImage} source={homeBanner} />
             </Pressable>
              ))}
@@ -154,6 +160,7 @@ export default function Home() {
             </ScrollView>
         </ScrollView>
         <FloatingButton onPress={handlePress} icon="chat" size={28} color="#FFF" label="Chat" />
+        {/* <FloatingButton onPress={handleClick} icon="chatbot" size={28} color="#FFF" label="chatbot" /> */}
         </View>
     );
 }

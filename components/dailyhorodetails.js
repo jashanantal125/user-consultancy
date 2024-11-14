@@ -8,7 +8,7 @@ const DailyHoroDetails = ({ sign, horoData }) => {
 
   if (!content) {
     return <View style={[styles.loadingContainer, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#FF1D58" />
+      <ActivityIndicator size="large" color="#1E90FF" />
     </View>
     // return <Text>No data available</Text>;
   }

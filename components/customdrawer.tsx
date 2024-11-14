@@ -43,7 +43,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <Text style={styles.editText}>
             Edit Profile
           </Text>
-          <FeatherIcon color="#FF1D58" name="edit" size={16} />
+          <FeatherIcon color="#1E90FF" name="edit" size={16} />
         </TouchableOpacity>
       </View>
       <View style={styles.drawerItemList}> 
@@ -80,7 +80,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
 const styles = StyleSheet.create({
   profileContainer: {
-    backgroundColor: '#FF1D58',
+    backgroundColor: '#1E90FF',
     padding: 20,
     alignItems: 'center',
   },
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
     fontSize: 15,
     fontWeight: '600',
-    color: '#FF1D58',
+    color: '#1E90FF',
   },
   drawerItemList: {
     flex: 1,
