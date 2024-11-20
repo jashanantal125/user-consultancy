@@ -1,28 +1,30 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
-import Home from '../home';
-import Chat from '../chat';
-import Call from '../call';
-import Remedies from '../remedies';
-import { MaterialIcons } from '@expo/vector-icons';
-import CustomDrawerContent from '@/components/customdrawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import History from '../history';
-import EditProfile from '../editprofile';
-import ProDetails from '../productdetails';
-import Dailyhoroscope from '../dailyhoroscope';
-import ChatScreen from '../chatscreen';
-import Index from '../index'
-import OtpVerify from '../otpverify';
-import AfterLogin from '../afterlogin';
-import blogDetails from '../blogscreen';
-import FloatingButton from '@/components/floatingbutton';
-import { NavigationAction } from '@react-navigation/native';
-
-
-
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+} from "@react-navigation/drawer";
+import Home from "../home";
+import Chat from "../chat";
+import Call from "../call";
+import Remedies from "../remedies";
+import { MaterialIcons } from "@expo/vector-icons";
+import CustomDrawerContent from "@/components/customdrawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import History from "../history";
+import EditProfile from "../editprofile";
+import ProDetails from "../productdetails";
+import Dailyhoroscope from "../dailyhoroscope";
+import ChatScreen from "../chatscreen";
+import Index from "../index";
+import OtpVerify from "../otpverify";
+import AfterLogin from "../afterlogin";
+import blogDetails from "../blogscreen";
+import FloatingButton from "@/components/floatingbutton";
+import { NavigationAction } from "@react-navigation/native";
+import { Image, View } from "react-native";
+const logo = require("../../assets/images/krewlogo.png");
 
 const Tab = createBottomTabNavigator();
 
@@ -39,27 +41,25 @@ type TabBarIconProps = {
 };
 
 function HomePage() {
-
   const handlePress = () => {
-    console.log('Floating button pressed');
+    console.log("Floating button pressed");
     // Add your navigation or other logic here
   };
 
   return (
     <Drawer.Navigator
-
       screenOptions={screenOptions}
-      drawerContent={(props: DrawerContentComponentProps) => <CustomDrawerContent {...props} />}
+      drawerContent={(props: DrawerContentComponentProps) => (
+        <CustomDrawerContent {...props} />
+      )}
     >
-
       <Drawer.Screen name="Home" component={BottomTabs} />
       <Drawer.Screen name="Chat" component={Chat} />
       <Drawer.Screen name="Call" component={Call} />
       <Drawer.Screen name="Remedies" component={Remedies} />
       <Drawer.Screen name="History" component={History} />
-
     </Drawer.Navigator>
-  )
+  );
 }
 // Bottom tab navigator for main screens
 function BottomTabs() {
@@ -72,6 +72,7 @@ function BottomTabs() {
           tabBarIcon: ({ color, size }: TabBarIconProps) => (
             <MaterialIcons name="home" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -81,6 +82,7 @@ function BottomTabs() {
           tabBarIcon: ({ color, size }: TabBarIconProps) => (
             <MaterialIcons name="chat" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -90,6 +92,7 @@ function BottomTabs() {
           tabBarIcon: ({ color, size }: TabBarIconProps) => (
             <MaterialIcons name="call" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -99,44 +102,42 @@ function BottomTabs() {
           tabBarIcon: ({ color, size }: TabBarIconProps) => (
             <MaterialIcons name="healing" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
   );
 }
 
-
-
-
-
 // Toggle button for drawer
 const DrawerToggleButton = ({ navigation }: { navigation: any }) => (
-  <MaterialIcons
-    name="menu"
-    size={24}
-    color="black"
-    onPress={() => navigation.toggleDrawer()}
-    style={{ marginLeft: 10 }}
-  />
+  <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+    <MaterialIcons
+      name="menu"
+      size={24}
+      color="black"
+      onPress={() => navigation.toggleDrawer()}
+      style={{ marginLeft: 10 }}
+    />
+    <View style={{ width: 80, height: 80 }}>
+      <Image
+        source={logo}
+        style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+      />
+    </View>
+  </View>
 );
 
 // Screen options for drawer navigator
 const screenOptions = ({ navigation }: { navigation: any }) => ({
   headerLeft: () => <DrawerToggleButton navigation={navigation} />,
-  headerTitle: '',
+  headerTitle: "",
 });
 
-
-
 export default function Dashboard() {
-
-
-
   return (
-
-    <NavigationContainer independent={true} >
+    <NavigationContainer independent={true}>
       <Stack.Navigator>
-
         <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
@@ -146,14 +147,20 @@ export default function Dashboard() {
         <Stack.Screen name="dailyhoroscope" component={Dailyhoroscope} />
         <Stack.Screen name="productdetails" component={ProDetails} />
         <Stack.Screen name="chatscreen" component={ChatScreen} />
-        <Stack.Screen name="index" component={Index} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="index"
+          component={Index}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="otpverify" component={OtpVerify} />
         <Stack.Screen name="afterlogin" component={AfterLogin} />
         <Stack.Screen name="blogscreen" component={blogDetails} />
-        <Stack.Screen name="dashboard" component={Dashboard} options={{ headerShown: false }} />
-
+        <Stack.Screen
+          name="dashboard"
+          component={Dashboard}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 }

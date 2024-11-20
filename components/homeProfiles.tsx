@@ -1,7 +1,14 @@
-import React from 'react';
-import { StyleSheet, SafeAreaView, View, Image, Text, TouchableOpacity } from 'react-native';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import FeatherIcon from "react-native-vector-icons/Feather";
+import { useNavigation } from "@react-navigation/native";
 
 export interface ProfileCardProps {
   imageUri: string;
@@ -10,18 +17,22 @@ export interface ProfileCardProps {
   minRate: number;
 }
 
-const HomeProfileCard: React.FC<ProfileCardProps> = ({ imageUri, profileName, department, minRate }) => {
+const HomeProfileCard: React.FC<ProfileCardProps> = ({
+  imageUri,
+  profileName,
+  department,
+  minRate,
+}) => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#f6f6f6", marginRight: 8 }}
+    >
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.profile}>
-            <Image
-              source={{ uri: imageUri }}
-              style={styles.profileAvatar}
-            />
+            <Image source={{ uri: imageUri }} style={styles.profileAvatar} />
             <View style={styles.profileInfo}>
               <Text style={styles.profileName}>{profileName}</Text>
               <Text style={styles.profileDepartment}>{department}</Text>
@@ -40,7 +51,7 @@ const HomeProfileCard: React.FC<ProfileCardProps> = ({ imageUri, profileName, de
           <TouchableOpacity
             style={styles.callAction}
             onPress={() => {
-              navigation.navigate('chatscreen');
+              navigation.navigate("chatscreen");
             }}
           >
             <Text style={styles.callActionText}>Call Now</Text>
@@ -55,21 +66,21 @@ const HomeProfileCard: React.FC<ProfileCardProps> = ({ imageUri, profileName, de
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   card: {
     width: 200,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e3e3e3',
-    alignItems: 'center',
+    borderColor: "#e3e3e3",
+    alignItems: "center",
   },
   profile: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   profileAvatar: {
@@ -77,50 +88,50 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginRight: 10,
-    borderColor: '#1E90FF',
-    borderWidth: 2
+    borderColor: "#1E90FF",
+    borderWidth: 2,
   },
   profileInfo: {
     flex: 1,
   },
   profileName: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#090909',
+    fontWeight: "600",
+    color: "#090909",
   },
   profileDepartment: {
     fontSize: 14,
-    fontWeight: '400',
-    color: '#848484',
+    fontWeight: "400",
+    color: "#848484",
   },
   ratingContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 4,
   },
   priceContainer: {
     marginTop: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   hourlyRateText: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#555',
+    fontWeight: "500",
+    color: "#555",
   },
   callAction: {
     marginTop: 10,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: '#1E90FF',
+    backgroundColor: "#1E90FF",
     borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   callActionText: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
     marginRight: 6,
   },
 });

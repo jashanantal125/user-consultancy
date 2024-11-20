@@ -1,117 +1,142 @@
-import { Text, StyleSheet, View, Dimensions, ScrollView, SafeAreaView } from 'react-native';
-import React from 'react';
-import { TextInput, Button, Pressable, Alert, Image } from 'react-native';
-import { useState, useEffect } from 'react';
-import { passwordStyles } from './password';
-const arrowImage = require("../../assets/images/Vector.png")
-const googleImage = require("../../assets/images/Google.png")
-const facebookImage = require("../../assets/images/Facebook.png")
-import Example from '@/components/profileCards';
-import VerticalCarousel from '@/components/blogCard';
-import Carousel from '@/components/caraousel';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-const man = require("../../assets/images/man.png")
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
-import { MaterialIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import useStore from '../store';
-
-
-
+import {
+  Text,
+  StyleSheet,
+  View,
+  Dimensions,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import React from "react";
+import { TextInput, Button, Pressable, Alert, Image } from "react-native";
+import { useState, useEffect } from "react";
+import { passwordStyles } from "./password";
+const arrowImage = require("../../assets/images/Vector.png");
+const googleImage = require("../../assets/images/Google.png");
+const facebookImage = require("../../assets/images/Facebook.png");
+import Example from "@/components/profileCards";
+import VerticalCarousel from "@/components/blogCard";
+import Carousel from "@/components/caraousel";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+const man = require("../../assets/images/astrology.png");
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import useStore from "../store";
 
 export default function Chat() {
-  const [consultants, setConsultants] = useState([{}])
+  const [consultants, setConsultants] = useState([{}]);
   const sid = useStore((state) => state.sid);
   const images = [
-  'file:///Users/jashanantal/Downloads/17D9A222-AADE-437C-BDA3-5A3EA1C968B2.JPEG',
-  'file:///Users/jashanantal/Downloads/E14ECB7D-B342-4A44-8BCC-BA7AFD48A6C9.JPEG',
-  'file:///Users/jashanantal/Downloads/6848FE8E-3197-41EA-8575-B7A7932A56D2.JPEG'
+    "file:///Users/jashanantal/Downloads/17D9A222-AADE-437C-BDA3-5A3EA1C968B2.JPEG",
+    "file:///Users/jashanantal/Downloads/E14ECB7D-B342-4A44-8BCC-BA7AFD48A6C9.JPEG",
+    "file:///Users/jashanantal/Downloads/6848FE8E-3197-41EA-8575-B7A7932A56D2.JPEG",
   ];
 
   useEffect(() => {
-
     getConsultantData();
-    
   }, []);
 
   const getConsultantData = async () => {
-    const res = await fetch(`http://65.0.52.105:8006/api/resource/User?filters=[["consultant_category", "=", "Astrologer"]]&fields=["*"]&sid=${sid}`, {
+    const res = await fetch(
+      `http://65.0.52.105:8006/api/resource/User?filters=[["consultant_category", "=", "Astrologer"]]&fields=["*"]&sid=${sid}`,
+      {
         method: "GET",
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
         credentials: "same-origin",
-    });
+      }
+    );
 
     const data = await res.json();
     // console.log(data.data);
     setConsultants(data.data);
-    
-}
+  };
 
   return (
-    <View >
-      <ScrollView horizontal style={passwordStyles.scrollContainer} showsHorizontalScrollIndicator={false}>
+    <View>
+      <ScrollView
+        horizontal
+        style={passwordStyles.scrollContainer}
+        showsHorizontalScrollIndicator={false}
+      >
         <TouchableOpacity style={passwordStyles.button}>
-        <MaterialIcons name="check" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            All
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={passwordStyles.button}>
-        <MaterialIcons name="local-offer" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            Offers
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={passwordStyles.button}>
-        <MaterialCommunityIcons name="book-education" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            Education
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={passwordStyles.button}>
-        <MaterialIcons name="shopping-bag" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            Career
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={passwordStyles.button}>
-        <MaterialIcons name="join-inner" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            Marriage
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={passwordStyles.button}>
-        <MaterialIcons name="health-and-safety" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            Health
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={passwordStyles.button}>
-        <MaterialIcons name="attach-money" size={24} color="white" style={passwordStyles.buttonIcon} />
-          <Text style={passwordStyles.textInButton}>
-            Wealth
-          </Text>
-        </TouchableOpacity>
-        
-      </ScrollView>
-      <ScrollView >
-        {/* <ScrollView horizontal style={passwordStyles.bannerContainer} showsHorizontalScrollIndicator={false}> */}
-          <Carousel
-          images={images}
-          height={100}
+          <MaterialIcons
+            name="check"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
           />
-          {consultants.map((row) => (
-        <Example
-        imageUri='https://media.istockphoto.com/id/1256156743/photo/handsome-man-stock-photo.jpg?s=612x612&w=0&k=20&c=J7DRxxxhl_Umb_GEm2uiBW6RNdEe2yoZn8pIqqaPOho='
-        profileName={row.full_name}
-        department={row.skill}
-        hourlyRate={row.chat_price}
-        />
+          <Text style={passwordStyles.textInButton}>All</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={passwordStyles.button}>
+          <MaterialIcons
+            name="local-offer"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
+          />
+          <Text style={passwordStyles.textInButton}>Offers</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={passwordStyles.button}>
+          <MaterialCommunityIcons
+            name="book-education"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
+          />
+          <Text style={passwordStyles.textInButton}>Education</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={passwordStyles.button}>
+          <MaterialIcons
+            name="shopping-bag"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
+          />
+          <Text style={passwordStyles.textInButton}>Career</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={passwordStyles.button}>
+          <MaterialIcons
+            name="join-inner"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
+          />
+          <Text style={passwordStyles.textInButton}>Marriage</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={passwordStyles.button}>
+          <MaterialIcons
+            name="health-and-safety"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
+          />
+          <Text style={passwordStyles.textInButton}>Health</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={passwordStyles.button}>
+          <MaterialIcons
+            name="attach-money"
+            size={24}
+            color="white"
+            style={passwordStyles.buttonIcon}
+          />
+          <Text style={passwordStyles.textInButton}>Wealth</Text>
+        </TouchableOpacity>
+      </ScrollView>
+      <ScrollView>
+        {/* <ScrollView horizontal style={passwordStyles.bannerContainer} showsHorizontalScrollIndicator={false}> */}
+        <Carousel images={images} height={100} />
+        {consultants.map((row) => (
+          <Example
+            imageUri="https://media.istockphoto.com/id/1256156743/photo/handsome-man-stock-photo.jpg?s=612x612&w=0&k=20&c=J7DRxxxhl_Umb_GEm2uiBW6RNdEe2yoZn8pIqqaPOho="
+            profileName={row.full_name}
+            department={row.skill}
+            hourlyRate={row.chat_price}
+          />
         ))}
-       {/* <Example
+        {/* <Example
         imageUri='https://media.istockphoto.com/id/1307385045/photo/close-up-of-indian-mature-men-stock-photo.jpg?s=612x612&w=0&k=20&c=ppyqkc3B8n1HMzHZ5a_GyykBwBHjdXy_3Kim_12L7cg='
         profileName='Virat Dhingra'
         department='Tarot'
@@ -131,8 +156,5 @@ export default function Chat() {
         /> */}
       </ScrollView>
     </View>
-
-
   );
 }
-

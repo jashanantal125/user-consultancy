@@ -1,6 +1,14 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
-const spellImage = require('../assets/images/spell.png');
+import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
+const spellImage = require("../assets/images/astrology.png");
 
 const ProductViewDetails = ({ productContent }) => {
   if (!productContent) {
@@ -20,7 +28,9 @@ const ProductViewDetails = ({ productContent }) => {
         </Pressable>
 
         <View style={styles.contentContainer}>
-          <Text style={styles.description}>{productContent.product_content}</Text>
+          <Text style={styles.description}>
+            {productContent.product_content}
+          </Text>
         </View>
       </ScrollView>
     </View>
@@ -29,43 +39,43 @@ const ProductViewDetails = ({ productContent }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   scrollContainer: {
     flexGrow: 1,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
     padding: 20,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 20,
     borderRadius: 15,
   },
   heading: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   description: {
     fontSize: 14,
-    color: '#555',
+    color: "#555",
   },
   button: {
     width: 100,
     height: 35,
-    backgroundColor: '#1E90FF',
+    backgroundColor: "#1E90FF",
     borderWidth: 0.5,
     borderRadius: 20,
-    borderColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
   },
   contentContainer: {
     paddingBottom: 20,
