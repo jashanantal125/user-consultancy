@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Priya Sharma",
+    "experience": "10 years",
+    "expertise": "Vedic Astrology, Horoscope Matching",
+    "rate": 20,
+    "rating": 5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 2,
+    "name": "Ravi Verma",
+    "experience": "8 years",
+    "expertise": "Palmistry, Numerology",
+    "rate": 18,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 3,
+    "name": "Sunita Kapoor",
+    "experience": "12 years",
+    "expertise": "Tarot Reading, Spiritual Guidance",
+    "rate": 25,
+    "rating": 4,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 4,
+    "name": "Anil Mehta",
+    "experience": "6 years",
+    "expertise": "Astrological Remedies, Zodiac Analysis",
+    "rate": 15,
+    "rating": 3,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 5,
+    "name": "Priya Sharma",
+    "experience": "10 years",
+    "expertise": "Vedic Astrology, Horoscope Matching",
+    "rate": 20,
+    "rating": 4,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 6,
+    "name": "Ravi Verma",
+    "experience": "8 years",
+    "expertise": "Palmistry, Numerology",
+    "rate": 18,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 7,
+    "name": "Sunita Kapoor",
+    "experience": "12 years",
+    "expertise": "Tarot Reading, Spiritual Guidance",
+    "rate": 25,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 8,
+    "name": "Anil Mehta",
+    "experience": "6 years",
+    "expertise": "Astrological Remedies, Zodiac Analysis",
+    "rate": 15,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 9,
+    "name": "Priya Sharma",
+    "experience": "10 years",
+    "expertise": "Vedic Astrology, Horoscope Matching",
+    "rate": 20,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 10,
+    "name": "Ravi Verma",
+    "experience": "8 years",
+    "expertise": "Palmistry, Numerology",
+    "rate": 18,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 11,
+    "name": "Sunita Kapoor",
+    "experience": "12 years",
+    "expertise": "Tarot Reading, Spiritual Guidance",
+    "rate": 25,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 12,
+    "name": "Anil Mehta",
+    "experience": "6 years",
+    "expertise": "Astrological Remedies, Zodiac Analysis",
+    "rate": 15,
+    "rating": 4.5,
+    "language": "Hindi",
+    "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+  }
+]

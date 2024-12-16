@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Astrologer",
+    "description": "Provides guidance and predictions based on astrological charts."
+  },
+  {
+    "id": 2,
+    "name": "Legal",
+    "description": "Offers legal advice and assistance with legal matters."
+  },
+  {
+    "id": 3,
+    "name": "Therapist",
+    "description": "Helps individuals address emotional and psychological challenges."
+  },
+  {
+    "id": 4,
+    "name": "Financial",
+    "description": "Provides advice on managing finances, investments, and planning."
+  },
+  {
+    "id": 5,
+    "name": "Career",
+    "description": "Guides individuals in making career decisions and achieving professional goals."
+  },
+  {
+    "id": 6,
+    "name": "Life",
+    "description": "Offers support and advice to help people manage personal and professional challenges."
+  }
+]

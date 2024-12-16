@@ -3,21 +3,37 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/dashboard/index.js", "app/registration/index.js", "app/afterlogin/afterlogin.js", "app/home", "app/forgotpassword.tsx/index.app/dashboard/global.jsbal.js", "app/editprofile/editprofile.js", "components/customdrawer.js", "components/productviewdetails.js", "components/dailyhorodetails.js", "components/dailyhorodetails.js", "components/search.jsx", "app/remedies/index.js", "app/productdetails/index.js", "app/otpverify/index.js", "app/history/index.js", "app/chat/index.js", "app/call/index.js", "app/blogscreen/index.js", "app/afterlogin/index.js", "app/afterlogin/index.js", "app/chatscreen/index.js", "app/store.js"  ]
+    "expo-env.d.ts",
+    "all screens/dashboard/index.js",
+    "app/registration/index.js",
+    "all screens/afterlogin/afterlogin.js",
+    "app/home",
+    "app/forgotpassword.tsx/index.app/dashboard/global.jsbal.js",
+    "all screens/editprofile/editprofile.js",
+    "components/customdrawer.js",
+    "components/productviewdetails.js",
+    "components/dailyhorodetails.js",
+    "components/dailyhorodetails.js",
+    "components/search.jsx",
+    "app/remedies/index.js",
+    "app/productdetails/index.js",
+    "app/otpverify/index.js",
+    "all screens/history/index.js",
+    "all screens/chat/index.js",
+    "all screens/call/index.js",
+    "all screens/blogscreen/index.js",
+    "all screens/afterlogin/index.js",
+    "all screens/afterlogin/index.js",
+    "all screens/chatscreen/index.js",
+    "all screens/store.js",
+    "components/DateTimePicker.jsx",
+    "app/loginOtp/index.js"
+  ]
 }
-
-
-
-
-
-

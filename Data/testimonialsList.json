@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "testimonial": "The service was excellent! I received clear and insightful guidance that truly helped me navigate my career choices.The service was excellent! I received clear and insightful guidance that truly helped me navigate my career choices.The service was excellent! I received clear and insightful guidance that truly helped me navigate my career choices.",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "testimonial": "Amazing experience! The financial advice provided was spot-on and helped me make better investment decisions.",
+    "rating": 4.8
+  },
+  {
+    "id": 3,
+    "name": "Alex Johnson",
+    "testimonial": "Highly recommend! The therapy sessions were life-changing and gave me a fresh perspective on managing stress.",
+    "rating": 4.9
+  },
+  {
+    "id": 4,
+    "name": "Emily Davis",
+    "testimonial": "Very professional and empathetic. The legal advice I received was both practical and easy to follow.",
+    "rating": 4.7
+  },
+  {
+    "id": 5,
+    "name": "Michael Brown",
+    "testimonial": "The astrologer's insights were incredibly accurate and gave me much-needed clarity on personal matters.",
+    "rating": 4.6
+  },
+  {
+    "id": 6,
+    "name": "Sophia Wilson",
+    "testimonial": "The life coaching sessions helped me regain confidence and achieve a better work-life balance.",
+    "rating": 4.8
+  }
+]

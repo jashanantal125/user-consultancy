@@ -1,0 +1,212 @@
+[
+  {
+    "type": "Astrologers",
+    "counsellors": [
+      {
+        "name": "Priya Sharma",
+        "experience": "10 years",
+        "expertise": "Vedic Astrology, Horoscope Matching",
+        "rate": 20,
+        "rating": 5,
+        "language": "Hindi",
+        "profilePic": "https://images.pexels.com/photos/5208217/pexels-photo-5208217.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "description": "A seasoned astrologer with over a decade of experience, specializing in Vedic Astrology, Horoscope Matching, and Birth Chart Analysis. Known for accurate predictions and a compassionate approach, they provide insights on love, career, health, and spiritual growth, empowering individuals to navigate life with confidence."
+      },
+      {
+        "name": "Ravi Verma",
+        "experience": "8 years",
+        "expertise": "Palmistry, Numerology",
+        "rate": 18,
+        "rating": 5,
+        "language": "Hindi",
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "description": "A seasoned astrologer with over a decade of experience, specializing in Vedic Astrology, Horoscope Matching, and Birth Chart Analysis. Known for accurate predictions and a compassionate approach, they provide insights on love, career, health, and spiritual growth, empowering individuals to navigate life with confidence."
+      },
+      {
+        "name": "Sunita Kapoor",
+        "experience": "12 years",
+        "expertise": "Tarot Reading, Spiritual Guidance",
+        "rate": 25,
+        "rating": 5,
+        "language": "Hindi",
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "description": "A seasoned astrologer with over a decade of experience, specializing in Vedic Astrology, Horoscope Matching, and Birth Chart Analysis. Known for accurate predictions and a compassionate approach, they provide insights on love, career, health, and spiritual growth, empowering individuals to navigate life with confidence."
+      },
+      {
+        "name": "Anil Mehta",
+        "experience": "6 years",
+        "expertise": "Astrological Remedies, Zodiac Analysis",
+        "rate": 15,
+        "rating": 5,
+        "language": "Hindi",
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "description": "A seasoned astrologer with over a decade of experience, specializing in Vedic Astrology, Horoscope Matching, and Birth Chart Analysis. Known for accurate predictions and a compassionate approach, they provide insights on love, career, health, and spiritual growth, empowering individuals to navigate life with confidence."
+      }
+    ]
+  },
+  {
+    "type": "Legal",
+    "counsellors": [
+      {
+        "name": "Anita Singh",
+        "experience": "12 years",
+        "expertise": "Corporate Law, Property Disputes",
+        "rate": 50,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Rajesh Gupta",
+        "experience": "7 years",
+        "expertise": "Criminal Law, Contract Negotiations",
+        "rate": 40,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Meera Sinha",
+        "experience": "10 years",
+        "expertise": "Family Law, Civil Litigation",
+        "rate": 45,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Vikram Chauhan",
+        "experience": "5 years",
+        "expertise": "Tax Law, Labor Law",
+        "rate": 35,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      }
+    ]
+  },
+  {
+    "type": "Therapist",
+    "counsellors": [
+      {
+        "name": "Dr. Meera Patel",
+        "experience": "15 years",
+        "expertise": "Cognitive Behavioral Therapy, Grief Counseling",
+        "rate": 60,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Arjun Desai",
+        "experience": "5 years",
+        "expertise": "Family Therapy, Stress Management",
+        "rate": 45,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Nisha Gupta",
+        "experience": "9 years",
+        "expertise": "Child Psychology, Anxiety Disorders",
+        "rate": 55,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Rahul Verma",
+        "experience": "7 years",
+        "expertise": "Trauma Counseling, Depression Management",
+        "rate": 50,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      }
+    ]
+  },
+  {
+    "type": "Financial",
+    "counsellors": [
+      {
+        "name": "Sonia Mehta",
+        "experience": "9 years",
+        "expertise": "Investment Strategies, Tax Planning",
+        "rate": 55,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Amit Joshi",
+        "experience": "6 years",
+        "expertise": "Retirement Planning, Debt Management",
+        "rate": 50,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Pooja Shah",
+        "experience": "11 years",
+        "expertise": "Wealth Management, Financial Analysis",
+        "rate": 60,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Kunal Desai",
+        "experience": "8 years",
+        "expertise": "Stock Market, Portfolio Management",
+        "rate": 48,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      }
+    ]
+  },
+  {
+    "type": "Career",
+    "counsellors": [
+      {
+        "name": "Kiran Rao",
+        "experience": "10 years",
+        "expertise": "Resume Building, Job Market Trends",
+        "rate": 30,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Pooja Bhatia",
+        "experience": "8 years",
+        "expertise": "Interview Coaching, Career Switch Guidance",
+        "rate": 35,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Rohan Malhotra",
+        "experience": "6 years",
+        "expertise": "Career Planning, Skill Development",
+        "rate": 28,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Sheetal Kapoor",
+        "experience": "9 years",
+        "expertise": "Leadership Development, Professional Networking",
+        "rate": 32,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      }
+    ]
+  },
+  {
+    "type": "Life",
+    "counsellors": [
+      {
+        "name": "Neha Kapoor",
+        "experience": "11 years",
+        "expertise": "Work-Life Balance, Goal Setting",
+        "rate": 40,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Siddharth Malhotra",
+        "experience": "6 years",
+        "expertise": "Personal Growth, Relationship Advice",
+        "rate": 38,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Ritika Sharma",
+        "experience": "8 years",
+        "expertise": "Stress Management, Self-Confidence Building",
+        "rate": 42,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        "name": "Aditya Verma",
+        "experience": "7 years",
+        "expertise": "Life Coaching, Overcoming Challenges",
+        "rate": 37,
+        "profilePic": "https://images.pexels.com/photos/9436715/pexels-photo-9436715.jpeg?auto=compress&cs=tinysrgb&w=800"
+      }
+    ]
+  }
+]
