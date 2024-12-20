@@ -29,7 +29,7 @@ const ChatHistory = () => {
   const handleGetChatHistory = async () => {
     try {
       const response = await getChatHistory.mutateAsync(userEmail);
-      console.log(response.data.data);
+
       setChatHistory(response.data.data);
     } catch (error) {
       console.log(error.response.data);
@@ -73,15 +73,14 @@ const ChatHistory = () => {
     return (
       <TouchableOpacity
         style={{
-          borderWidth: 1,
           paddingHorizontal: 16,
-          paddingVertical: 10,
+          paddingVertical: 16,
           borderColor: "#d3d3d3",
           flexDirection: "row",
           alignItems: "center",
           gap: 24,
-          marginHorizontal: 6,
-          borderRadius: 12,
+          borderBottomWidth: 1,
+          // borderRadius: 12,
         }}
         onPress={() =>
           handleNavigateToChat(
@@ -112,7 +111,9 @@ const ChatHistory = () => {
           <Text style={{ color: Colors.grey.medium }}>{item.last_message}</Text>
         </View>
         <View style={{ alignSelf: "flex-end" }}>
-          <Text>{dateTime.format("HH:mm")}</Text>
+          <Text style={{ fontSize: 12, color: Colors.grey.medium }}>
+            {dateTime.format("HH:mm")}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -134,15 +135,15 @@ export default ChatHistory;
 
 const styles = StyleSheet.create({
   consultantImageContainer: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
   },
   consultantImage: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: 15,
+    borderRadius: 20,
     borderColor: "#d3d3d3",
-    borderWidth: 1,
+    borderWidth: 2,
   },
 });

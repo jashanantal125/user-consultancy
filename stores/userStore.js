@@ -9,6 +9,7 @@ export const useUserStore = create(
       userEmail: "",
       hydrated: false,
       walletBalance: "",
+      userDetails: null,
       setUserTempNumber: (userTempNumber) => set({ userTempNumber }),
       setUserEmail: (userEmail) => set({ userEmail }),
       setHydrated: () => set({ hydrated: true }),

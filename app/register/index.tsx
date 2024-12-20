@@ -165,7 +165,7 @@ const Register = () => {
           body.append("fileType", "MEDIA");
 
           const uploadResponse = await uploadFile.mutateAsync(body);
-          console.log(uploadResponse.data.message.file_url);
+
           setImage(uploadResponse.data.message.file_url);
           //  setMedia((prevMedia) => [
           //    ...prevMedia,
@@ -188,7 +188,7 @@ const Register = () => {
   const fetchLanguage = useCallback(async () => {
     try {
       const response = await getLanguage.mutateAsync();
-      console.log(response.data.data);
+
       setLanguageOptions(response.data.data);
     } catch (error) {
       console.error("Error fetching language data:", error);
@@ -255,7 +255,7 @@ const Register = () => {
         birth_date: moment(selectedDate).format("YYYY-MM-DD"),
         place_of_birth: birthPlace,
         current_place: currentAddress,
-        language: selectedLanguage.language_code,
+        language: selectedLanguage?.language_name,
         birth_time: moment(selectedTime).format("HH:mm:ss"),
         password: password,
         user_image: image,

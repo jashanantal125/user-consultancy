@@ -1,4 +1,11 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Header from "@/components/Header";
 import { ScrollView } from "react-native";
@@ -14,6 +21,9 @@ import { ConstantStrings } from "@/constants/ConstantStrings";
 import { useSendChatRequest } from "@/hooks/useSendChatRequest";
 import { useUserStore } from "@/stores/userStore";
 import { useCheckWalletBalance } from "@/hooks/useCheckWalletBalance";
+import { useGetConsultantRatings } from "../../hooks/useGetConsultantRatings";
+import { AirbnbRating } from "react-native-ratings";
+import moment from "moment";
 
 const ConsultantProfile = () => {
   const { name, consultant } = useLocalSearchParams();
@@ -22,18 +32,101 @@ const ConsultantProfile = () => {
   const consultantDetails = JSON.parse(consultant);
   const sendChatRequest = useSendChatRequest();
   const getUserDetails = useGetUserInfo();
+  const getConsultantRatings = useGetConsultantRatings();
+  const [ratings, setRatings] = useState();
+
   const { userEmail } = useUserStore((state) => ({
     userEmail: state.userEmail,
   }));
+
   const checkWalletBalance = useCheckWalletBalance();
   const handleGetUserDetails = useCallback(async () => {
     const response = await getUserDetails.mutateAsync(consultantDetails.email);
-    setConsultantFullDetails(response.data.data);
+    if (response.data.data) {
+      const ratingResponse = await getConsultantRatings.mutateAsync(
+        response.data.data.email
+      );
+      setConsultantFullDetails(response.data.data);
+      setRatings(ratingResponse.data.data);
+    }
   }, []);
 
+  const renderRatings = ({ item }) => {
+    return (
+      <View
+        style={{
+          borderWidth: 1,
+          marginBottom: 10,
+          borderRadius: 12,
+          padding: 10,
+          borderColor: "#d3d3d3",
+          gap: 8,
+          flexDirection: "row",
+        }}
+      >
+        <View style={{ width: 40, height: 40 }}>
+          <Image
+            source={{
+              uri: ConstantStrings.url.base_url + item.user_image,
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              resizeMode: "cover",
+              borderRadius: 20,
+              borderColor: "#d3d3d3",
+              borderWidth: 2,
+            }}
+          />
+        </View>
+        <View style={{ alignItems: "flex-start", gap: 8, flex: 1 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 12,
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "600" }}>
+              {item?.full_name}
+            </Text>
+            <Text style={{ fontSize: 12, color: Colors.grey.medium }}>
+              {moment(item?.creation.split(" ")[0]).format("DD MMM YYYY")}{" "}
+              {moment(item?.creation).format("hh:mm A")}
+            </Text>
+          </View>
+          <View>
+            <AirbnbRating
+              isDisabled={true} // Read-only mode
+              defaultRating={item.rating / 0.2}
+              showRating={false} // Hides "Tap to rate" text
+              size={12} // Star size
+            />
+          </View>
+          <View
+            style={{
+              justifyContent: "space-between",
+              flexDirection: "row",
+              width: "100%",
+              alignItems: "flex-end",
+              gap: 16,
+            }}
+          >
+            <Text style={{ flex: 1 }}>{item.comment}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
   useEffect(() => {
     handleGetUserDetails();
   }, []);
+
+  const handleGetCOnsultantRatings = async () => {
+    console.log(response.data.data);
+  };
 
   const handleSendChatRequest = async () => {
     const randomRoomNumber = Math.floor(Math.random() * 900) + 100;
@@ -77,7 +170,7 @@ const ConsultantProfile = () => {
         minutes: consultantFullDetails?.minimum_min_chat,
       };
       const response = await checkWalletBalance.mutateAsync(payload);
-      console.log(response.data);
+
       if (response.data.message.status == "success") {
         handleSendChatRequest();
       } else {
@@ -152,6 +245,14 @@ const ConsultantProfile = () => {
                 {consultantFullDetails?.consultant_bio}
               </Text>
             </View>
+            <View style={{ paddingHorizontal: 16, gap: 16 }}>
+              <Text style={{ fontSize: 20, fontWeight: "600" }}>Ratings:</Text>
+              <FlatList
+                data={ratings}
+                renderItem={renderRatings}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -215,9 +316,9 @@ const styles = StyleSheet.create({
 
   icon: {
     position: "absolute",
-    right: "32%",
+    right: "35%",
     zIndex: 1,
-    bottom: 0,
+    bottom: "-25%",
   },
 
   basicInfo: {
@@ -253,6 +354,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 26,
     justifyContent: "space-between",
+    alignItems: "flex-end",
   },
   experienceBox: {
     flex: 1,

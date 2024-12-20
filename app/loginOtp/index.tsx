@@ -15,7 +15,7 @@ const LoginOtp = () => {
 
   const handleSubmit = (otpCode) => {
     Keyboard.dismiss();
-    console.log("OUUPP", otpCode);
+
     router.push("/register");
   };
 

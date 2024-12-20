@@ -26,7 +26,7 @@ import { useSendChatRequest } from "@/hooks/useSendChatRequest";
 
 const AllConsultants = () => {
   const { categoryName = "Krew" } = useLocalSearchParams();
-  console.log(categoryName);
+
   const [index, setIndex] = useState(0);
   const getAllConsultantList = useGetAllConsultantList();
   const [consultantData, setConsultantData] = useState();
@@ -43,10 +43,8 @@ const AllConsultants = () => {
     try {
       const response = await getAllConsultantList.mutateAsync(payload);
       setConsultantData(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error, "All consultant lists api error");
-      console.log(error.response.data);
     }
   };
 
@@ -97,6 +95,12 @@ const AllConsultants = () => {
       console.log(error, "send chat request api error");
     }
   };
+  const handleNavigateConsultantProfile = (name, item) => {
+    router.push({
+      pathname: "/consultantprofile",
+      params: { name: name, consultant: JSON.stringify(item) }, // Add query parameters
+    });
+  };
 
   const handleWalletBalanceCheck = async (
     chatPrice,
@@ -112,7 +116,7 @@ const AllConsultants = () => {
         minutes: minChat,
       };
       const response = await checkWalletBalance.mutateAsync(payload);
-      console.log(response.data);
+
       if (response.data.message.status == "success") {
         handleSendChatRequest(
           chatPrice,
@@ -130,7 +134,10 @@ const AllConsultants = () => {
 
   const renderConsultants = ({ item }) => {
     return (
-      <View style={styles.consultantCard}>
+      <TouchableOpacity
+        style={styles.consultantCard}
+        onPress={() => handleNavigateConsultantProfile(item.first_name, item)}
+      >
         <View style={styles.consultantDetailsContainer}>
           <View style={styles.imageAndRatingMainContainer}>
             <View>
@@ -200,7 +207,7 @@ const AllConsultants = () => {
           <Text style={styles.buttonText}>Chat</Text>
         </TouchableOpacity> */}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

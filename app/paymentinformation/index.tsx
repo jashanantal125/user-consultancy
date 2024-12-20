@@ -21,13 +21,18 @@ import { useRechargeApi } from "@/hooks/useRechargeApi";
 import { useUserStore } from "@/stores/userStore";
 import LottieView from "lottie-react-native";
 import UpiIcon from "../../assets/icons/upi-icon.svg";
+import DebitCardIcon from "../../assets/icons/debitCardIcon.svg";
 
 const PaymentInformation = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [fareBreakdown, setFareBreakdown] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const router = useRouter();
-  const { amount, offerAmount, offerAmountPercentage } = useLocalSearchParams();
+  const {
+    amount,
+    offerAmount = 0,
+    offerAmountPercentage = 0,
+  } = useLocalSearchParams();
   const getFareBreakup = useFareBreakup();
   const rechargeApi = useRechargeApi();
   const { userEmail } = useUserStore((state) => ({
@@ -45,7 +50,7 @@ const PaymentInformation = () => {
       offerPercent: offerAmountPercentage,
     };
     const response = await getFareBreakup.mutateAsync(payload);
-    console.log(response.data.data);
+
     setFareBreakdown(response.data.data);
   };
 
@@ -122,48 +127,51 @@ const PaymentInformation = () => {
               </View>
             </View>
           </View>
-
-          <View style={styles.dottedCardContainer}>
-            <View
-              style={{
-                backgroundColor: "#4c8fc6",
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-                paddingVertical: 16,
-                paddingHorizontal: 16,
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}>
-                {fareBreakdown?.offer_percent}% extra on recharge of{" "}
-                {fareBreakdown?.amount}
-              </Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: "#fff",
-                borderBottomLeftRadius: 10,
-                borderBottomRightRadius: 10,
-                paddingVertical: 16,
-                paddingHorizontal: 16,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 12,
-              }}
-            >
-              <AntDesign name="checkcircle" size={22} color="#28a745" />
-              <Text
+          {fareBreakdown?.offer_amount != 0 && (
+            <View style={styles.dottedCardContainer}>
+              <View
                 style={{
-                  fontSize: 14,
-                  flex: 1,
-                  color: Colors.grey.medium,
-                  fontWeight: "600",
+                  backgroundColor: "#4c8fc6",
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                  paddingVertical: 16,
+                  paddingHorizontal: 16,
                 }}
               >
-                ₹ {fareBreakdown?.offer_amount} cashback in Krew wallet with
-                this recharge.
-              </Text>
+                <Text
+                  style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}
+                >
+                  {fareBreakdown?.offer_percent}% extra on recharge of{" "}
+                  {fareBreakdown?.amount}
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: "#fff",
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
+                  paddingVertical: 16,
+                  paddingHorizontal: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 12,
+                }}
+              >
+                <AntDesign name="checkcircle" size={22} color="#28a745" />
+                <Text
+                  style={{
+                    fontSize: 14,
+                    flex: 1,
+                    color: Colors.grey.medium,
+                    fontWeight: "600",
+                  }}
+                >
+                  ₹ {fareBreakdown?.offer_amount} cashback in Krew wallet with
+                  this recharge.
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
           <View style={styles.upiCard}>
             <View style={{ gap: 14 }}>
               <Text style={styles.title}>
@@ -261,7 +269,12 @@ const PaymentInformation = () => {
               style={styles.option}
               onPress={() => handleSelection("Credit/Debit Card")}
             >
-              <Text style={styles.optionText}>Credit/Debit Card</Text>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+              >
+                <DebitCardIcon width={40} height={40} />
+                <Text style={styles.optionText}>Credit/Debit Card</Text>
+              </View>
               <View style={styles.radio}>
                 {selectedPaymentMethod === "Credit/Debit Card" && (
                   <View style={styles.selectedRadio} />

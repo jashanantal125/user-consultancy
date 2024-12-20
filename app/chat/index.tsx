@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,6 +8,9 @@ import {
   View,
   Alert,
   Animated,
+  ScrollView,
+  Keyboard,
+  FlatList,
 } from "react-native";
 import { GiftedChat, Message } from "react-native-gifted-chat";
 import { Colors } from "@/constants/Colors";
@@ -32,6 +35,17 @@ import { useRechargeApi } from "../../hooks/useRechargeApi";
 import { useSendChatRequest } from "@/hooks/useSendChatRequest";
 import ReviewModal from "../../components/ReviewModal";
 import { useSubmitReview } from "../../hooks/useSubmitReview";
+import { TouchableWithoutFeedback } from "react-native";
+import { useGetPricingList } from "@/hooks/useGetPricingList";
+import { useFareBreakup } from "@/hooks/useFareBreakup";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import GooglePayIcon from "../../assets/icons/googlepay_icon.svg";
+import PhonePeIcon from "../../assets/icons/phonepe-icon.svg";
+import BhimIcon from "../../assets/icons/bhim_icon.svg";
+import UpiIcon from "../../assets/icons/upi-icon.svg";
+import DebitCardIcon from "../../assets/icons/debitCardIcon.svg";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import LottieView from "lottie-react-native";
 
 const ChatScreen = () => {
   const {
@@ -61,6 +75,28 @@ const ChatScreen = () => {
     isComingFromHistory == "true" ? true : false
   );
   const [amount, setAmount] = useState();
+  const bottomSheetRef = useRef(null);
+  const [bottomModalVisible, setBottomModalVisible] = useState(false);
+  const [fareBreakdownModalVisible, setFareBreakdownModalVisible] =
+    useState(false);
+  const [pricingList, setPricingList] = useState();
+  const getPricingList = useGetPricingList();
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [fareBreakdown, setFareBreakdown] = useState();
+  const [isRechargeSuccessful, setRechargeSuccessful] = useState(false);
+
+  const handleGetPricingList = async () => {
+    const response = await getPricingList.mutateAsync();
+    setPricingList(response.data.data);
+  };
+
+  useEffect(() => {
+    handleGetPricingList();
+  }, []);
+  const openBottomSheet = () => {
+    bottomSheetRef.current?.open();
+  };
+
   const openTimeRemainingSheet = () => {
     setModalVisible(true);
   };
@@ -76,12 +112,15 @@ const ChatScreen = () => {
   };
 
   const openRechargeScreenSheet = () => {
-    setIsRechargeScreenVisible(true);
+    setBottomModalVisible(true);
   };
   const closeRechargeScreenSheet = () => {
-    setIsRechargeScreenVisible(false);
+    setBottomModalVisible(false);
   };
 
+  const handleSelection = (method) => {
+    setSelectedPaymentMethod(method);
+  };
   const consultantFullDetails = JSON.parse(consultantDetails);
 
   const router = useRouter();
@@ -105,7 +144,7 @@ const ChatScreen = () => {
   const chatDeduction = useChatDeduction();
   const checkWalletBalance = useCheckWalletBalance();
   const rechargeApi = useRechargeApi();
-
+  const getFareBreakup = useFareBreakup();
   const handleGetChatHistory = useCallback(async () => {
     const payload = {
       room: room,
@@ -223,7 +262,7 @@ const ChatScreen = () => {
         amount: chatPrice,
         user: userEmail,
         consultant: consultantEmail,
-        time: isEndChatPressed ? remainingTime.toFixed(1) : minimumChat,
+        time: minimumChat,
       };
       const response = await chatDeduction.mutateAsync(payload);
       if (response.data.Success) {
@@ -234,6 +273,23 @@ const ChatScreen = () => {
     }
   };
 
+  const handleFareBreakup = async (
+    amount,
+    offerAmount,
+    offerAmountPercentage
+  ) => {
+    const payload = {
+      amount: amount,
+      offer: offerAmount,
+      offerPercent: offerAmountPercentage,
+    };
+    const response = await getFareBreakup.mutateAsync(payload);
+    if (response.data.data) {
+      setFareBreakdown(response.data.data);
+      setBottomModalVisible(false);
+      setFareBreakdownModalVisible(true);
+    }
+  };
   useEffect(() => {
     let intervalId;
 
@@ -248,7 +304,6 @@ const ChatScreen = () => {
           openTimeRemainingSheet();
         }
       } else if (timeLeft === 0) {
-        console.log("this is ");
         handleTimerEnd();
       }
     }
@@ -286,18 +341,32 @@ const ChatScreen = () => {
     },
   });
 
+  // const handleRecharge = async () => {
+  //   const payload = {
+  //     amount: amount,
+  //     user: userEmail,
+  //   };
+  //   const response = await rechargeApi.mutateAsync(payload);
+  //   if (response.data.Success) {
+  //     closeRechargeScreenSheet();
+  //     handleWalletCheckBalance(isChatEnd ? true : false);
+  //     resumeTimer();
+
+  //     console.log(response.data);
+  //   }
+  // };
   const handleRecharge = async () => {
     const payload = {
-      amount: amount,
+      amount: fareBreakdown?.amount,
       user: userEmail,
+      tax_amount: fareBreakdown?.tax_amount,
+      tax_percent: fareBreakdown?.tax_percent,
+      cashback: fareBreakdown?.offer_amount,
     };
     const response = await rechargeApi.mutateAsync(payload);
     if (response.data.Success) {
-      closeRechargeScreenSheet();
-      handleWalletCheckBalance(isChatEnd ? true : false);
-      resumeTimer();
-
-      console.log(response.data);
+      // handleRechargeModal();
+      setRechargeSuccessful(true);
     }
   };
   useEffect(() => {
@@ -401,6 +470,43 @@ const ChatScreen = () => {
           {/* <Text style={styles.sendButtonText}>Send</Text> */}
         </TouchableOpacity>
       </View>
+    );
+  };
+  const renderPricingCard = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={styles.priceCardContainer}
+        onPress={() =>
+          handleFareBreakup(
+            item.amount,
+            item.offer_amount,
+            item.offer_amount_percentage
+          )
+        }
+      >
+        <Text>Recharge</Text>
+        <View style={{ flexDirection: "row", gap: 2 }}>
+          <Text>with</Text>
+          <Text style={styles.priceCardText}>{item.amount}</Text>
+        </View>
+        {item.offer_amount != 0 && (
+          <View style={styles.promotionalMoneyContainer}>
+            <Text>and get</Text>
+
+            <Text style={styles.priceCardText}>{item.total_amount}</Text>
+          </View>
+        )}
+        {/* Ribbon */}
+        {item.offer_amount != 0 && (
+          <View style={styles.ribbonContainer}>
+            <View style={styles.ribbon}>
+              <Text style={styles.ribbonText}>
+                {item.offer_amount_percentage}% Extra
+              </Text>
+            </View>
+          </View>
+        )}
+      </TouchableOpacity>
     );
   };
   const handleEndChat = async () => {
@@ -512,7 +618,6 @@ const ChatScreen = () => {
         setTimeLeft((prevTime) => prevTime + Number(minimumChat) * 60);
       }
     } else {
-      console.log("not working");
       closeTimeRemainingSheet();
       openRechargeScreenSheet();
     }
@@ -711,6 +816,355 @@ const ChatScreen = () => {
           userEmail={userEmail}
         />
       )}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={bottomModalVisible}
+        onRequestClose={() => setBottomModalVisible(false)}
+        style={{ margin: 0 }}
+      >
+        {/* Background overlay to close modal */}
+
+        <View style={styles.overlay}>
+          {/* Prevent tap propagation inside the bottom sheet */}
+
+          <View style={styles.bottomSheet}>
+            <View style={{ alignItems: "center" }}>
+              <Text style={{ fontSize: 18, fontWeight: "700" }}>
+                Please choose a price
+              </Text>
+            </View>
+            <FlatList
+              data={pricingList}
+              renderItem={renderPricingCard}
+              numColumns={2}
+              style={{ height: "100%" }}
+              keyExtractor={(item) => item.amount.toString()}
+              columnWrapperStyle={{
+                justifyContent: "space-between", // Adjust spacing between columns
+                gap: 20,
+                paddingVertical: 4,
+              }}
+              showsVerticalScrollIndicator={false}
+            />
+            <Button
+              title="Close"
+              onPress={() => setBottomModalVisible(false)}
+            />
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={fareBreakdownModalVisible}
+        onRequestClose={() => setFareBreakdownModalVisible(false)}
+        style={{ margin: 0 }}
+      >
+        {/* Background overlay to close modal */}
+
+        <View style={styles.overlay}>
+          {/* Prevent tap propagation inside the bottom sheet */}
+
+          <View style={styles.bottomSheet}>
+            {isRechargeSuccessful ? (
+              <>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  <LottieView
+                    source={require("../../assets/lotties/tick_lottie.json")} // Path to your Lottie file
+                    autoPlay
+                    loop={true}
+                    style={styles.lottie}
+                    speed={0.5}
+                  />
+                  <Text style={styles.modalTitle}>Recharge Successful</Text>
+                  <Text style={styles.message}>
+                    Your recharge has been completed successfully!
+                  </Text>
+                  <Button
+                    title="close"
+                    onPress={() => {
+                      setFareBreakdownModalVisible(false),
+                        handleWalletCheckBalance(isChatEnd ? true : false),
+                        resumeTimer();
+                    }}
+                  />
+                </View>
+              </>
+            ) : (
+              <>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={{ position: "absolute", left: 0 }}
+                    onPress={() => {
+                      setBottomModalVisible(true),
+                        setFareBreakdownModalVisible(false);
+                    }}
+                  >
+                    <MaterialIcons name="arrow-back" size={24} color="black" />
+                  </TouchableOpacity>
+
+                  <Text style={{ fontSize: 18, fontWeight: "700" }}>
+                    Payment Information
+                  </Text>
+                </View>
+                <ScrollView
+                  style={styles.scrollView}
+                  showsVerticalScrollIndicator={false}
+                >
+                  <View style={styles.scrollViewMainContainer}>
+                    <View style={styles.paymentCard}>
+                      {/* Header */}
+                      <View style={styles.paymentCardHeader}>
+                        <Text style={styles.paymentCardHeaderText}>
+                          Payment Details
+                        </Text>
+                      </View>
+
+                      {/* Payment Details */}
+                      <View style={styles.paymentCardDetails}>
+                        <View style={styles.paymentCardDetailRow}>
+                          <Text style={styles.paymentCardLabel}>
+                            Total Amount
+                          </Text>
+                          <Text style={styles.paymentCardValue}>
+                            ₹{fareBreakdown?.amount}
+                          </Text>
+                        </View>
+                        <View style={styles.paymentCardDetailRow}>
+                          <Text style={styles.paymentCardLabel}>
+                            Tax ({fareBreakdown?.tax_percent}%)
+                          </Text>
+                          <Text style={styles.paymentCardValue}>
+                            ₹{fareBreakdown?.tax_amount.toFixed(1)}
+                          </Text>
+                        </View>
+                        <View style={styles.paymentCardDetailRow}>
+                          <Text
+                            style={[
+                              styles.paymentCardLabel,
+                              styles.paymentCardTotalLabel,
+                            ]}
+                          >
+                            Total Payable
+                          </Text>
+                          <Text
+                            style={[
+                              styles.paymentCardValue,
+                              styles.paymentCardTotalValue,
+                            ]}
+                          >
+                            ₹{fareBreakdown?.total_payable_amount.toFixed(1)}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    {fareBreakdown?.offer_amount != 0 && (
+                      <View style={styles.dottedCardContainer}>
+                        <View
+                          style={{
+                            backgroundColor: "#4c8fc6",
+                            borderTopRightRadius: 10,
+                            borderTopLeftRadius: 10,
+                            paddingVertical: 16,
+                            paddingHorizontal: 16,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "#fff",
+                              fontSize: 16,
+                              fontWeight: "600",
+                            }}
+                          >
+                            {fareBreakdown?.offer_percent}% extra on recharge of{" "}
+                            {fareBreakdown?.amount}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            backgroundColor: "#fff",
+                            borderBottomLeftRadius: 10,
+                            borderBottomRightRadius: 10,
+                            paddingVertical: 16,
+                            paddingHorizontal: 16,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 12,
+                          }}
+                        >
+                          <AntDesign
+                            name="checkcircle"
+                            size={22}
+                            color="#28a745"
+                          />
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              flex: 1,
+                              color: Colors.grey.medium,
+                              fontWeight: "600",
+                            }}
+                          >
+                            ₹ {fareBreakdown?.offer_amount} cashback in Krew
+                            wallet with this recharge.
+                          </Text>
+                        </View>
+                      </View>
+                    )}
+                    <View style={styles.upiCard}>
+                      <View style={{ gap: 14 }}>
+                        <Text style={styles.title}>
+                          Pay directly with favourite UPI app
+                        </Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: 28,
+                          }}
+                        >
+                          <View style={{ alignItems: "center", gap: 10 }}>
+                            <TouchableOpacity
+                              style={{
+                                borderRadius: 10,
+                                backgroundColor: "#fff",
+                                elevation: 3,
+                                shadowColor: "#000",
+                                shadowOpacity: 0.1,
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowRadius: 5,
+                                padding: 8,
+                                width: 60,
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <GooglePayIcon width={40} height={40} />
+                            </TouchableOpacity>
+                            <Text>Gpay</Text>
+                          </View>
+                          <View style={{ alignItems: "center", gap: 10 }}>
+                            <TouchableOpacity
+                              style={{
+                                borderRadius: 10,
+                                backgroundColor: "#fff",
+                                elevation: 3,
+                                shadowColor: "#000",
+                                shadowOpacity: 0.1,
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowRadius: 5,
+                                padding: 8,
+                                width: 60,
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <PhonePeIcon width={40} height={40} />
+                            </TouchableOpacity>
+                            <Text>phonePe</Text>
+                          </View>
+                        </View>
+                      </View>
+                      <View
+                        style={{ height: 1, backgroundColor: "#d3d3d3" }}
+                      ></View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 8,
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
+                        >
+                          <BhimIcon />
+                          <Text style={{ fontSize: 16, fontWeight: "600" }}>
+                            Pay with other UPI app
+                          </Text>
+                        </View>
+
+                        <AntDesign
+                          name="right"
+                          size={24}
+                          color={Colors.grey.normal}
+                        />
+                      </View>
+                    </View>
+                    <View style={styles.otherOptionsCard}>
+                      <Text style={styles.title}>Other Payment Methods</Text>
+
+                      <TouchableOpacity
+                        style={styles.option}
+                        onPress={() => handleSelection("UPI")}
+                      >
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 8,
+                          }}
+                        >
+                          <UpiIcon width={40} height={40} />
+                          <Text style={styles.optionText}>UPI</Text>
+                        </View>
+
+                        <View style={styles.radio}>
+                          {selectedPaymentMethod === "UPI" && (
+                            <View style={styles.selectedRadio} />
+                          )}
+                        </View>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={styles.option}
+                        onPress={() => handleSelection("Credit/Debit Card")}
+                      >
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 8,
+                          }}
+                        >
+                          <DebitCardIcon width={40} height={40} />
+                          <Text style={styles.optionText}>
+                            Credit/Debit Card
+                          </Text>
+                        </View>
+                        <View style={styles.radio}>
+                          {selectedPaymentMethod === "Credit/Debit Card" && (
+                            <View style={styles.selectedRadio} />
+                          )}
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </ScrollView>
+                <View>
+                  <Button
+                    title={"Proceed to pay"}
+                    onPress={() => handleRecharge()}
+                  />
+                </View>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -803,5 +1257,251 @@ const styles = StyleSheet.create({
     gap: 3,
     flexDirection: "row",
     justifyContent: "center",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
+  },
+  overlay: {
+    flex: 1,
+    // backgroundColor: "red",
+    justifyContent: "flex-end", // Aligns modal to the bottom
+    // backgroundColor: "rgba(0,0,0,0.5)", // Semi-transparent background
+  },
+  bottomSheet: {
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    height: "50%", // Adjust the height as needed
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // For Android shadow
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  content: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  ribbonContainer: {
+    position: "absolute",
+    top: 15,
+    right: -20,
+    overflow: "hidden",
+    transform: [{ rotate: "45deg" }],
+  },
+  ribbon: {
+    backgroundColor: "#FF5722",
+    height: 20,
+    width: 90,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  ribbonText: {
+    color: "white",
+    fontSize: 10,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
+  promotionalMoneyContainer: {
+    flexDirection: "row",
+    gap: 2,
+  },
+  priceCardContainer: {
+    backgroundColor: "#f5f5f5",
+    borderRadius: 12,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    width: "47%",
+    height: 100,
+    marginTop: 20,
+    overflow: "hidden",
+    gap: 4,
+  },
+  priceCardText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.primary,
+  },
+  scrollView: {
+    paddingTop: "12%",
+    backgroundColor: "#fff",
+  },
+  parentComponent: {
+    flex: 1,
+  },
+  scrollViewMainContainer: {
+    backgroundColor: "#fff",
+    flex: 1,
+    paddingHorizontal: 16,
+    gap: 16,
+    paddingBottom: "40%",
+  },
+  paymentCard: {
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+  },
+  paymentCardHeader: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    paddingBottom: 10,
+    marginBottom: 15,
+  },
+  paymentCardHeaderText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: Colors.grey.medium,
+  },
+  paymentCardDetails: {
+    gap: 10,
+  },
+  paymentCardDetailRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  paymentCardLabel: {
+    fontSize: 16,
+    color: "#555",
+  },
+  paymentCardValue: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+  },
+  paymentCardTotalLabel: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  paymentCardTotalValue: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#000",
+  },
+  dottedCardContainer: {
+    borderRadius: 10,
+    borderWidth: 2,
+    borderStyle: "dashed",
+    borderColor: Colors.primary,
+    backgroundColor: "#fff",
+  },
+  dottedCardHeaderText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#333",
+  },
+  dottedCardContentText: {
+    fontSize: 16,
+    color: "#555",
+  },
+  upiCard: {
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    gap: 28,
+  },
+  otherOptionsCard: {
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+  },
+
+  option: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+    justifyContent: "space-between",
+  },
+  radio: {
+    width: 20,
+    height: 20,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "#1169bb",
+    marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selectedRadio: {
+    width: 12,
+    height: 12,
+    borderRadius: 50,
+    backgroundColor: "#1169bb",
+  },
+  optionText: {
+    fontSize: 16,
+  },
+  optionsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  modal: {
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  lottie: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  message: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

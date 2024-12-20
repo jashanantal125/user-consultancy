@@ -32,7 +32,6 @@ const Wallet = () => {
   const handleGetPricingList = async () => {
     const response = await getPricingList.mutateAsync();
     setPricingList(response.data.data);
-    console.log(response.data.data, "hh");
   };
 
   const handleNavigateToPaymentInformation = (
@@ -74,12 +73,13 @@ const Wallet = () => {
           <Text>with</Text>
           <Text style={styles.priceCardText}>{item.amount}</Text>
         </View>
+        {item.offer_amount != 0 && (
+          <View style={styles.promotionalMoneyContainer}>
+            <Text>and get</Text>
 
-        <View style={styles.promotionalMoneyContainer}>
-          <Text>and get</Text>
-          <Text style={styles.priceCardText}>{item.total_amount}</Text>
-        </View>
-
+            <Text style={styles.priceCardText}>{item.total_amount}</Text>
+          </View>
+        )}
         {/* Ribbon */}
         {item.offer_amount != 0 && (
           <View style={styles.ribbonContainer}>
@@ -128,7 +128,8 @@ const Wallet = () => {
           />
           <Button
             title={"Recharge"}
-            // onPress={() => router.push("/paymentinformation")}
+            onPress={() => handleNavigateToPaymentInformation(amount)}
+            disabled={!amount || amount === "0"}
           />
         </View>
         <View>

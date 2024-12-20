@@ -100,7 +100,7 @@ const Home = () => {
   const handleConsultantList = useCallback(async () => {
     try {
       const response = await getConsultantList.mutateAsync(listCategory);
-      console.log(response.data.data);
+
       setConsultantList(response.data.data);
     } catch (error) {
       console.log(error, "Consultant list api error");
@@ -164,7 +164,6 @@ const Home = () => {
         minutes: minutes,
       };
       const response = await checkWalletBalance.mutateAsync(payload);
-      console.log(response.data);
       if (response.data.message.status == "success") {
         handleSendChatRequest(
           email,
@@ -273,21 +272,20 @@ const Home = () => {
           <View>
             <Entypo
               name="dot-single"
-              size={40}
+              size={50}
               color={
                 item.active_status == "OFFLINE" || item.active_status == "BUSY"
                   ? "#FF4D4D"
                   : "#28a745"
               }
+              style={{ position: "absolute", right: -20, bottom: -12 }}
             />
           </View>
         </View>
         <View style={styles.detailsContainer}>
           <Text style={styles.counsellorName}>{item.first_name}</Text>
           <Text style={styles.counsellorDetails}>Years: {item.experience}</Text>
-          <Text style={styles.counsellorDetails}>
-            Expertise: {item.primary_skills}
-          </Text>
+          <Text style={styles.counsellorDetails}>{item.primary_skills}</Text>
         </View>
         <View style={styles.bottomButton}>
           <TouchableOpacity style={styles.button}>
@@ -316,32 +314,6 @@ const Home = () => {
     );
   };
 
-  const renderCategory = ({ item }) => (
-    <View style={styles.categoryContainer}>
-      <View style={styles.categoryTitleContainer}>
-        <Text style={styles.categoryTitle}>{item.type}</Text>
-        <TouchableOpacity
-          onPress={() =>
-            router.push({
-              pathname: "/allconsultants",
-              params: { categoryName: listCategory },
-            })
-          }
-        >
-          <Text style={styles.counsellorRate}>View All</Text>
-        </TouchableOpacity>
-      </View>
-
-      <FlatList
-        data={item.counsellors}
-        keyExtractor={(consultants) => consultants.name}
-        renderItem={renderConsultants}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.counsellorList}
-      />
-    </View>
-  );
   return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.mainContainer}>
@@ -351,6 +323,7 @@ const Home = () => {
             renderItem={renderCategories}
             horizontal={true} // Set to horizontal
             showsHorizontalScrollIndicator={false}
+            style={{ paddingBottom: 10 }}
           />
         </View>
         <View style={styles.caroselContainer}>
@@ -412,6 +385,7 @@ const Home = () => {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.counsellorList}
+              style={{ paddingVertical: 10 }}
             />
           </View>
           <View style={styles.testimonialContainer}>
@@ -427,13 +401,19 @@ const Home = () => {
             <Carousel
               loop
               width={width}
-              height={200}
+              height={260}
               autoPlay={true}
               autoPlayInterval={3000}
               data={testimonials}
               scrollAnimationDuration={1000}
               onSnapToItem={(index) => setTestimonialCurrentIndex(index)}
               renderItem={renderTestimonialList}
+              style={{
+                backgroundColor: "#fff",
+                paddingVertical: 10,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             />
             <View style={styles.indicatorContainer}>
               {testimonials?.map((_, index) => (
@@ -474,6 +454,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 50,
+    borderWidth: 1,
+    borderColor: Colors.grey.normal,
   },
 
   categoriesMainContainer: {
@@ -488,6 +470,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     width: 100,
     backgroundColor: "#fff",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
   selectedCategoriesMainContainer: {
     gap: 10,
@@ -501,6 +488,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     width: 100,
     backgroundColor: "#fff",
+    shadowColor: Colors.primary,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
   categoriesText: {
     textAlign: "center",
@@ -539,8 +530,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     width: 200,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 0 },
     elevation: 3,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -565,21 +557,21 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   categoryContainer: {
-    marginBottom: 20,
     gap: 10,
     marginHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: "8%",
   },
   categoryTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    marginLeft: "3%",
   },
   testimonialTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    marginLeft: 16,
+    marginLeft: "6%",
   },
   counsellorList: {
     paddingHorizontal: 5,
@@ -604,29 +596,37 @@ const styles = StyleSheet.create({
   },
   consultantActivityContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
+    alignSelf: "center",
   },
   testimonialImage: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: 25,
+    borderRadius: 35,
     borderColor: "#d3d3d3",
     borderWidth: 1,
   },
   testimonialImageContainer: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
+    shadowColor: "#4d93cc",
+    shadowOpacity: 0.7,
+    shadowOffset: { width: 1, height: 0 },
+    shadowRadius: 10,
+    elevation: 3,
   },
 
   testimonialCard: {
     backgroundColor: "#fff",
     borderRadius: 8,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     paddingVertical: "4%",
     paddingHorizontal: "6%",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 6,
+    marginTop: 10,
     elevation: 3,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -635,6 +635,7 @@ const styles = StyleSheet.create({
     gap: 12,
     marginHorizontal: 16,
     minHeight: 200,
+    alignSelf: "center",
   },
   testimonialContainer: {
     marginBottom: 30,
@@ -649,6 +650,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     gap: 3,
+    alignItems: "center",
   },
   bottomButton: {
     flexDirection: "row",
